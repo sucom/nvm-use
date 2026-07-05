@@ -4,7 +4,6 @@ A lightweight companion utility script for `NVM` - Node Version Manager (`nvm-wi
 
 ### Why this nvm-use?
 * **On Windows (`nvm-windows`):** Native NVM modifies a single global symlink. Changing versions in Terminal A changes it for Terminal B instantly. `nvm-use` bypasses the global symlink entirely, allowing you to run completely different Node versions in concurrent terminal windows.
-* **On Mac / Linux (`nvm`):** Sourcing native `nvm.sh` on every terminal startup adds noticeable shell boot latency (100ms–500ms). `nvm-use` allows you to completely remove native NVM from your shell startup scripts for near-zero boot times, swapping paths instantly.
 
 ## 🚀 The Core Philosophy
 * **Pure Process Isolation:** Uses lightweight environment path swapping to safely adjust the active runtime in the current window without polluting other terminals.
@@ -55,10 +54,10 @@ Configure these under **System Properties > Environment Variables**:
 
 Download and save the scripts (`nvm-use.cmd` and `nvm-use.sh`) and place them directly inside `NVM_HOME` or `NVM_DIR` folder (`C:\nvm` | `$HOME/.nvm`) so they are immediately accessible globally.
 
-### 1. For Command Prompt / PowerShell (Windows) - `nvm-use.cmd`
-1. Download and Save `nvm-use.cmd` file in `NVM_HOME` folder.
+### 1. For Command Prompt / PowerShell (Windows) - `nvm-use.cmd` and `use.cmd`
+1. Download and Save `nvm-use.cmd` and `use.cmd` files in `NVM_HOME` folder.
 
-2. Make sure environment variables `NVM_HOME` and `NVM_SYMLINK` are set in your Windows System Properties environment variables panel.
+2. Make sure environment variables `NVM_HOME` and `NVM_SYMLINK` are set in your Windows System Properties environment variables panel. That's it you are all set.
 
 ### 2. For Git-Bash (Windows) - `nvm-use.sh`
 1. Download and Save `nvm-use.sh` file in `NVM_HOME` folder.
@@ -69,7 +68,10 @@ Download and save the scripts (`nvm-use.cmd` and `nvm-use.sh`) and place them di
 
 ```bash
 alias nvm-use='source "$(cygpath -u "$NVM_HOME")/nvm-use.sh"'
+# alias use='source "$(cygpath -u "$NVM_HOME")/nvm-use.sh"' # Uncomment if you want it even shorter
 ```
+
+That's it you are all set.
 
 ### 3. For macOS & Linux (Zsh / Bash) - `nvm-use.sh`
 1. Download and Save `nvm-use.sh` file in `$NVM_DIR/version-switch` (e.g. ~/.nvm/version-switch) folder.
@@ -81,20 +83,23 @@ alias nvm-use='source "$(cygpath -u "$NVM_HOME")/nvm-use.sh"'
 ```bash
 # Add the nvm-use alias pointer. Adjust the folder where nvm-use.sh is saved.
 alias nvm-use='source "$HOME/.nvm/version-switch/nvm-use.sh"'
+# alias use='source "$HOME/.nvm/version-switch/nvm-use.sh"' # Uncomment if you want it even shorter
 ```
+
+That's it you are all set.
 
 ## 📖 Command Cheat Sheet & Workflow
 
-With this architecture implemented, use the native `nvm` engine exclusively for downloading node versions, and use our lightweight scripts for interactive context switching.
+With this architecture implemented, use the native `nvm` engine exclusively for downloading node versions, and use this lightweight scripts for interactive version switching.
 
 ### 1. View Local Versions
-Lists all runtimes safely extracted to your storage device.
+Lists all versions safely extracted to your device.
 ```cmd
 nvm list
 ```
 
 ### 2. Download a New Node version
-Downloads and unzips a node environment cleanly into your storage target directory.
+Downloads and unzips a node environment cleanly into your nvm directory.
 ```cmd
 nvm install 24
 ```
@@ -129,6 +134,10 @@ nvm-use --version   :: Displays current utility script version profile (also acc
 node -v
 npm -v
 ```
+
+### 6. Manage Global Packages Across Node Versions
+
+If you want to manage common global packages across different Node versions, try [`npm-g`](https://github.com/sucom/npm-g).
 
 ## ⚖️ LICENSE
 
